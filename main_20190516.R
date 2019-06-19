@@ -37,9 +37,9 @@ LE_UNIT_NO = label_encoder(dataset$UNIT_NO)
 tmp_col = as.integer(LE_UNIT_NO(dataset$UNIT_NO))
 dataset$UNIT_NO = tmp_col
 
-tmp_col = ifelse(dataset$BUSINESS_ORIGIN %in% c('XXX','XXZ','XXY','XXJ'),dataset$BUSINESS_ORIGIN,'OTHS')
-LE_BUSINESS_ORIGIN = label_encoder(tmp_col)
-tmp_col = as.integer(LE_BUSINESS_ORIGIN(tmp_col))
+#tmp_col = ifelse(dataset$BUSINESS_ORIGIN %in% c('XXX','XXZ','XXY','XXJ'),dataset$BUSINESS_ORIGIN,'OTHS')
+LE_BUSINESS_ORIGIN = label_encoder(dataset$BUSINESS_ORIGIN)
+tmp_col = as.integer(LE_BUSINESS_ORIGIN(dataset$BUSINESS_ORIGIN))
 dataset$BUSINESS_ORIGIN = tmp_col
 
 LE_COPERATE_COMPANY_NO = label_encoder(dataset$COPERATE_COMPANY_NO)
@@ -138,9 +138,10 @@ dataset$FORCE_INJURE_IND_L3Y = as.integer(dataset$FORCE_INJURE_IND_L3Y)
 dataset = dataset[dataset$ORIGIN_ISSUE_DUR>=0,]
 dataset = dataset[dataset$AGE>=0,]
 
+dataset$START_DATETIME = as.Date(dataset$START_DATETIME)
 
-traindata = dataset[dataset$START_DATETIME>='2017-01-01',]
-testdata = dataset[dataset$START_DATETIME<'2017-01-01',]
+traindata = dataset[dataset$START_DATETIME<'2017-01-01',]
+testdata = dataset[dataset$START_DATETIME>='2017-01-01',]
 
 saveRDS(traindata,'traindata.rds')
 saveRDS(testdata,'testdata.rds')
