@@ -80,8 +80,13 @@ typechange = function(dataset,numeric_col,integer_col,factor_col,character_col){
 dataset = typechange(dataset,numeric_col,integer_col,factor_col,character_col)
 
 
-
-
+##############
+label_encoder = function(vec){
+  levels = names(sort(table(vec)))
+  function(x){
+    match(x, levels)
+  }
+}
 
 
 
